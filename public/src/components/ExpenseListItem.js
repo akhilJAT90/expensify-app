@@ -11,10 +11,7 @@ export const ExpenseListItem = ({id,description,amount,createdAt}={}) =>(
     <p>{amount} - {createdAt}</p>
     </div>
 );
-const mapStateToProps = ()=>{
-    return {
-    };
-}
+const mapStateToProps = ()=>{return {}};
 
 export default connect(mapStateToProps)(ExpenseListItem);
     

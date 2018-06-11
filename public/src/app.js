@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'normalize.css/normalize.css';
-import './styles/styles.scss';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import {addExpense} from './actions/expenses';
@@ -9,6 +7,8 @@ import {setTextFilter} from './actions/filters';
 import getVisibleExpenses from './selectors/expenses';
 import { Provider } from 'react-redux';
 import 'react-dates/lib/css/_datepicker.css';
+import 'normalize.css/normalize.css';
+import './styles/styles.scss';
 
 const store = configureStore();
 store.subscribe(()=>{
@@ -22,7 +22,9 @@ store.subscribe(()=>{
 // setTextFilter -> bill
 // getVisibleExpenses  -> print Visible ones to screen
 
-
+store.dispatch(addExpense({description : 'Water Bill', amount : 20000, createdAt : 0 }));
+store.dispatch(addExpense({description : 'Electricity Bill', amount : 10000, createdAt : 2 }));
+store.dispatch(addExpense({description : 'Gas Bill', amount : 50000, createdAt : 1 }));
 // store.dispatch(setTextFilter('bill'));
 
 // setTimeout(()=>{

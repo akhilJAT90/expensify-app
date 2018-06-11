@@ -4,16 +4,21 @@ import {connect} from 'react-redux';
 import {addExpense} from '../actions/expenses';
 
 
-const AddExpensePage = (props)=>(
-    <div>
-    <h1><ExpenseForm onSubmit={(expense)=>{
-        props.dispatch(addExpense(expense));
-        props.history.push('/');
+export class AddExpensePage extends React.Component{
+    onSubmit =(expense)=>{
+        this.props.addExpense(expense);
+        this.props.history.push('/');
         //console.log(expense);
-    }} /></h1>
-    </div>
-);
+    };
+    render(){
+        return (
+            <div>
+            <h1><ExpenseForm  onSubmit={this.onSubmit}/></h1>
+            </div>
+        );
+    }
+}
 
-    
+const mapDispathToProps = (dispatch)=>({addExpense : (expense)=>dispatch(addExpense(expense))})
 
-export default connect()(AddExpensePage) ;//we don't need anything from the store , so we left connect (empty)
+export default connect(undefined,mapDispathToProps)(AddExpensePage) ;//we don't need anything from the store , so we left connect (empty)

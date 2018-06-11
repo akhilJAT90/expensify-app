@@ -1,9 +1,15 @@
 //entry point -> output
 //here we write all config related information
 const path = require('path');
+//const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
-    entry : './public/src/app.js',
+
+
+module.exports =(env)=>{
+    const isProduction = env == 'production';
+    
+    return {
+        entry : './public/src/app.js',
     output : {
         path : path.join(__dirname,'public/'),
         filename : 'bundle.js'
@@ -17,16 +23,21 @@ module.exports = {
         },
         {
             test:/\.s?css$/,
-            use: [ 'style-loader', 'css-loader','sass-loader' ]
+            use: [ 'css-loader','sass-loader',]
+            
 
         }]
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool: isProduction ? 'source-map':'inline-source-map',
     devServer : {
         contentBase : path.join(__dirname,'public'),
         historyApiFallback : true
     }
+    };
 };
+
+
+
 
 //loader -> lets you customize the behaviour of webpack
 //loader for scss -> convert to css
