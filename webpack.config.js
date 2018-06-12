@@ -1,12 +1,13 @@
 //entry point -> output
 //here we write all config related information
 const path = require('path');
-//const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
 
 module.exports =(env)=>{
     const isProduction = env == 'production';
+    const CSSExtract = new ExtractTextPlugin('styles.css');
     
     return {
         entry : './public/src/app.js',
@@ -21,13 +22,27 @@ module.exports =(env)=>{
             test: /\.js$/,
             exclude : /node_modules/
         },
-        {
+        {//loader supports a set of option So we can define source map for loaders
             test:/\.s?css$/,
-            use: [ 'css-loader','sass-loader',]
-            
+            use: CSSExtract.extract({
+                use :[ 
+                    {
+                        loader: 'css-loader',
+                        options : {
+                            sourceMap : true
+                                    }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options : {
+                                  sourceMap : true
+                                }
+                    }]
+            })
 
         }]
     },
+    plugins : [CSSExtract],
     devtool: isProduction ? 'source-map':'inline-source-map',
     devServer : {
         contentBase : path.join(__dirname,'public'),
